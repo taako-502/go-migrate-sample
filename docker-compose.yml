@@ -1,36 +1,49 @@
 version: "3.9"
 
-x-conf: &conf
-  image: mongo:5.0.7
-  restart: always
-  environment:
-    MONGO_INITDB_ROOT_USERNAME: root
-    MONGO_INITDB_ROOT_PASSWORD: root
-    MONGO_INITDB_DATABASE: sample
-  volumes:
-    - ./replicaset.key:/etc/replicaset.key
-  command: --keyFile /etc/replicaset.key --replSet rs0
-
 services:
-  mongo-primary:
+  mongodb:
+    container_name: go_migrate_mongo_primary
+    image: mongo:5.0.7
+    # command: --keyFile /etc/replicaset.key --replSet rs0
+    command: mongod --replSet rs0
     ports:
-      - 27017:27017
-    <<: *conf
+      - "27017:27017"
+    volumes:
+      # - ./replicaset.key:/etc/replicaset.key
+      - go_migrate_mongo_primary_data:/data/db
 
   mongo-secondary:
+    container_name: go_migrate_mongo_secondary
+    image: mongo:5.0.7
+    # command: --keyFile /etc/replicaset.key --replSet rs0
+    command: mongod --replSet rs0
     ports:
-      - 27018:27017
-    <<: *conf
+      - "27018:27017"
+    volumes:
+      # - ./replicaset.key:/etc/replicaset.key
+      - go_migrate_mongo_secondary_data:/data/db
 
   mongo-tertiary:
+    container_name: go_migrate_mongo_tertiary
+    image: mongo:5.0.7
+    # command: --keyFile /etc/replicaset.key --replSet rs0
+    command: mongod --replSet rs0
     ports:
-      - 27019:27017
-    <<: *conf
+      - "27019:27017"
+    volumes:
+      # - ./replicaset.key:/etc/replicaset.key
+      - go_migrate_mongo_tertiary_data:/data/db
 
-  mongo-arbiter:
+  mongo-:
+    container_name: go_migrate_mongo_arbiter
+    image: mongo:5.0.7
+    # command: --keyFile /etc/replicaset.key --replSet rs0
+    command: mongod --replSet rs0
     ports:
-      - 27020:27017
-    <<: *conf
+      - "27020:27017"
+    volumes:
+      # - ./replicaset.key:/etc/replicaset.key
+      - go_migrate_mongo_arbiter_data:/data/db
 
   ## Docker上でhttps://github.com/golang-migrate/migrateを実行するためのコンテナ
   ## https://hub.docker.com/r/migrate/migrate
@@ -42,3 +55,9 @@ services:
       - .:/var/task
     working_dir: /var/task
     command: ""
+
+volumes:
+  go_migrate_mongo_primary_data:
+  go_migrate_mongo_secondary_data:
+  go_migrate_mongo_tertiary_data:
+  go_migrate_mongo_arbiter_data:
