@@ -32,6 +32,7 @@ services:
       - 27020:27017
     <<: *conf
 
+  ## Docker上でhttps://github.com/golang-migrate/migrateを実行するためのコンテナ
   migrate:
     image: migrate/migrate:v4.15.2
     entrypoint: sh
