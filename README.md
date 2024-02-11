@@ -40,14 +40,17 @@ rs.conf()
 ## マイグレーション
 
 ```bash
-# バージョンアップ
+# 最新化
 migrate -path ./migrations -database "mongodb://localhost:27017/testdb?directConnection=true" up
+
+# 1つだけバージョンアップ
+migrate -path ./migrations -database "mongodb://localhost:27017/testdb?directConnection=true" up 1
 ```
 
 # バージョンダウン
 
 ```bash
-migrate -path ./migrations -database "mongodb://localhost:27017/testdb?directConnection=true" down
+migrate -path ./migrations -database "mongodb://localhost:27017/testdb?directConnection=true" down 1
 ```
 
 # dirty 状態の解消
