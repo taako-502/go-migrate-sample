@@ -45,7 +45,7 @@ services:
   ## Docker上でhttps://github.com/golang-migrate/migrateを実行するためのコンテナ
   ## https://hub.docker.com/r/migrate/migrate
   migrate:
-    image: migrate/migrate:v4.15.2
+    image: migrate/migrate:latest
     entrypoint: sh
     tty: true
     volumes:
