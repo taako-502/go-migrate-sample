@@ -13,7 +13,8 @@ $ chown 999 replicaset.key
 mongosh を開く。
 
 ```bash
-mongosh
+docker exec -it go_migrate_mongo_primary bash
+mongosh -u root -p root
 ```
 
 レプリカセットの初期化

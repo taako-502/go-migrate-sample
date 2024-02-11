@@ -3,9 +3,13 @@ version: "3.9"
 x-conf: &conf
   # 最新バージョンはここで確認すること
   # https://www.mongodb.com/try/download/community
+  environment:
+    MONGO_INITDB_ROOT_USERNAME: root
+    MONGO_INITDB_ROOT_PASSWORD: root
+    MONGO_INITDB_DATABASE: testdb
   image: mongo:7.0.5
   # command: --keyFile /etc/replicaset.key --replSet rs0
-  command: mongod --replSet rs0
+  command: mongod --replSet rs0 --keyFile /etc/replicaset.key
 
 services:
   mongodb-primary:
@@ -14,7 +18,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      # - ./replicaset.key:/etc/replicaset.key
+      - ./replicaset.key:/etc/replicaset.key
       - go_migrate_mongo_primary_data:/data/db
 
   mongo-secondary:
@@ -23,7 +27,7 @@ services:
     ports:
       - "27018:27017"
     volumes:
-      # - ./replicaset.key:/etc/replicaset.key
+      - ./replicaset.key:/etc/replicaset.key
       - go_migrate_mongo_secondary_data:/data/db
 
   mongo-tertiary:
@@ -32,7 +36,7 @@ services:
     ports:
       - "27019:27017"
     volumes:
-      # - ./replicaset.key:/etc/replicaset.key
+      - ./replicaset.key:/etc/replicaset.key
       - go_migrate_mongo_tertiary_data:/data/db
 
   mongo-arbiter:
@@ -41,7 +45,7 @@ services:
     ports:
       - "27020:27017"
     volumes:
-      # - ./replicaset.key:/etc/replicaset.key
+      - ./replicaset.key:/etc/replicaset.key
       - go_migrate_mongo_arbiter_data:/data/db
 
   ## Docker上でhttps://github.com/golang-migrate/migrateを実行するためのコンテナ
