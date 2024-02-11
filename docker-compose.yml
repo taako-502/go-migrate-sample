@@ -8,7 +8,6 @@ x-conf: &conf
     MONGO_INITDB_ROOT_PASSWORD: root
     MONGO_INITDB_DATABASE: testdb
   image: mongo:7.0.5
-  # command: --keyFile /etc/replicaset.key --replSet rs0
   command: mongod --replSet rs0 --keyFile /etc/replicaset.key
 
 services:
