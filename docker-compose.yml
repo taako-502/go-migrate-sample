@@ -1,7 +1,9 @@
 version: "3.9"
 
 x-conf: &conf
-  image: mongo:5.0.7
+  # 最新バージョンはここで確認すること
+  # https://www.mongodb.com/try/download/community
+  image: mongo:7.0.5
   # command: --keyFile /etc/replicaset.key --replSet rs0
   command: mongod --replSet rs0
 
