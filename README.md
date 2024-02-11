@@ -30,15 +30,30 @@ rs.initiate({
 })
 ```
 
+確認用コマンド
+
+```bash
+rs.status()
+rs.conf()
+```
+
 ## マイグレーション
 
 ```bash
 # バージョンアップ
 migrate -path ./migrations -database "mongodb://localhost:27017/testdb?directConnection=true" up
-
+```
 
 # バージョンダウン
+
+```bash
 migrate -path ./migrations -database "mongodb://localhost:27017/testdb?directConnection=true" down
+```
+
+# dirty 状態の解消
+
+```bash
+migrate -path ./migrations -database "mongodb://localhost:27017/testdb?directConnection=true" force 1
 ```
 
 ## 参考

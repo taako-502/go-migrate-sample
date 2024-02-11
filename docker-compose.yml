@@ -1,11 +1,14 @@
 version: "3.9"
 
+x-conf: &conf
+  image: mongo:5.0.7
+  # command: --keyFile /etc/replicaset.key --replSet rs0
+  command: mongod --replSet rs0
+
 services:
   mongodb:
     container_name: go_migrate_mongo_primary
-    image: mongo:5.0.7
-    # command: --keyFile /etc/replicaset.key --replSet rs0
-    command: mongod --replSet rs0
+    <<: *conf
     ports:
       - "27017:27017"
     volumes:
@@ -14,9 +17,7 @@ services:
 
   mongo-secondary:
     container_name: go_migrate_mongo_secondary
-    image: mongo:5.0.7
-    # command: --keyFile /etc/replicaset.key --replSet rs0
-    command: mongod --replSet rs0
+    <<: *conf
     ports:
       - "27018:27017"
     volumes:
@@ -25,9 +26,7 @@ services:
 
   mongo-tertiary:
     container_name: go_migrate_mongo_tertiary
-    image: mongo:5.0.7
-    # command: --keyFile /etc/replicaset.key --replSet rs0
-    command: mongod --replSet rs0
+    <<: *conf
     ports:
       - "27019:27017"
     volumes:
@@ -36,9 +35,7 @@ services:
 
   mongo-:
     container_name: go_migrate_mongo_arbiter
-    image: mongo:5.0.7
-    # command: --keyFile /etc/replicaset.key --replSet rs0
-    command: mongod --replSet rs0
+    <<: *conf
     ports:
       - "27020:27017"
     volumes:
